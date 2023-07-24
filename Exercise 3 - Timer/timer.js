@@ -1,15 +1,14 @@
-// Get the timer element and buttons
 const timerElement = document.getElementById("timer");
-const add5sButton = document.getElementById("add5s");
-const add10sButton = document.getElementById("add10s");
-const add15sButton = document.getElementById("add15s");
-let remainingTime = 10;
+const minusBtn = document.getElementById("minusBtn");
+const plusBtn = document.getElementById("plusBtn");
+const resetBtn = document.getElementById("resetBtn");
+const stopBtn = document.getElementById("stopBtn");
+let time = prompt("Please enter number");
 let interval;
 
-// Function to update the timer
 function updateTimer() {
-  timerElement.innerText = remainingTime;
-  if (remainingTime === 0) {
+  timerElement.innerText = time;
+  if (time === 0) {
     clearInterval(interval);
     hideButtons();
   }
@@ -17,32 +16,44 @@ function updateTimer() {
 
 function startCountdown() {
   interval = setInterval(() => {
-    remainingTime--;
+    time--;
+    stopBtn.style.backgroundColor = "green";
     updateTimer();
   }, 1000);
 }
 
-// Function to hide the buttons after countdown ends
 function hideButtons() {
-  add5sButton.style.display = "none";
-  add10sButton.style.display = "none";
-  add15sButton.style.display = "none";
+  minusBtn.style.display = "none";
+  plusBtn.style.display = "none";
+  resetBtn.style.display = "none";
+  stopBtn.style.display = "none";
 }
 
-// Event listeners for the buttons
-add5sButton.addEventListener("click", () => {
-  remainingTime += 5;
+minusBtn.addEventListener("click", () => {
+  time -= 1;
   updateTimer();
 });
 
-add10sButton.addEventListener("click", () => {
-  remainingTime += 10;
+plusBtn.addEventListener("click", () => {
+  time += 1;
   updateTimer();
 });
 
-add15sButton.addEventListener("click", () => {
-  remainingTime += 15;
+stopBtn.addEventListener("click", () => {
+  minusBtn.style.backgroundColor = "green";
+  plusBtn.style.backgroundColor = "green";
+  resetBtn.style.backgroundColor = "green";
+  clearInterval(interval);
+});
+
+function resetCountdown() {
+  clearInterval(interval);
+  time = 0;
   updateTimer();
+}
+
+resetBtn.addEventListener("click", () => {
+  resetCountdown();
 });
 
 startCountdown();
